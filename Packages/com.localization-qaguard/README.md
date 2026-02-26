@@ -68,3 +68,11 @@ Unity -batchmode -quit \
 - `--lqg-check-unused=true|false`
 - `--lqg-reference-locale=en`
 
+## CI Wrapper Script
+
+Repository includes a helper script:
+
+```bash
+scripts/run-localization-qa.sh "/path/to/Unity" "/path/to/Project" "/path/to/report.json" "error"
+```
+

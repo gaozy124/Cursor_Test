@@ -30,6 +30,14 @@ Arguments:
 - `--lqg-check-unused=true|false`
 - `--lqg-reference-locale=en`
 
+## CI Helper Script
+
+Use:
+
+```bash
+scripts/run-localization-qa.sh "/path/to/Unity" "/path/to/UnityProject" "/path/to/report.json" "error"
+```
+
 ## Core Logic Tests
 
 Run:
