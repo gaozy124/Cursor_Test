@@ -1,0 +1,35 @@
+{
+  "Metadata": {
+    "GeneratedAtUtc": "2026-02-26T00:00:00+00:00",
+    "ProjectPath": "/path/to/MyUnityProject",
+    "ProjectName": "MyUnityProject",
+    "CollectionCount": 2,
+    "EntryCount": 14
+  },
+  "Issues": [
+    {
+      "RuleId": "LQG002",
+      "Severity": 2,
+      "CollectionName": "UI",
+      "Key": "menu.play",
+      "LocaleCode": "fr",
+      "Message": "Missing translation for locale 'fr'.",
+      "SuggestedFix": "Add a translation in this locale, or intentionally suppress with project policy.",
+      "AssetPath": "Assets/Localization/UI Shared.asset"
+    },
+    {
+      "RuleId": "LQG004",
+      "Severity": 2,
+      "CollectionName": "Shop",
+      "Key": "shop.price",
+      "LocaleCode": "ja",
+      "Message": "Placeholder mismatch. Expected [amount], found [price].",
+      "SuggestedFix": "Align placeholders with the reference locale text.",
+      "AssetPath": "Assets/Localization/Shop Shared.asset"
+    }
+  ],
+  "ErrorCount": 2,
+  "WarningCount": 0,
+  "InfoCount": 0
+}
+
