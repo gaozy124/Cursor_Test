@@ -51,7 +51,7 @@ public static class LocalizationQAGuardCli
 
             Debug.Log($"[Localization QA Guard] Scan complete. Errors={report.ErrorCount}, Warnings={report.WarningCount}, Info={report.InfoCount}");
 
-            var exitCode = ComputeExitCode(report, GetArgValue(args, FailOnArg));
+            var exitCode = ExitCodePolicy.Compute(report, GetArgValue(args, FailOnArg));
             if (exitEditor)
             {
                 EditorApplication.Exit(exitCode);
@@ -85,18 +85,6 @@ public static class LocalizationQAGuardCli
         }
 
         return context;
-    }
-
-    private static int ComputeExitCode(ScanReport report, string? failOnArg)
-    {
-        var failOn = (failOnArg ?? "error").Trim().ToLowerInvariant();
-        return failOn switch
-        {
-            "none" => 0,
-            "warning" when report.ErrorCount > 0 || report.WarningCount > 0 => 2,
-            "error" when report.ErrorCount > 0 => 2,
-            _ => 0
-        };
     }
 
     private static string? GetArgValue(string[] args, string prefix)

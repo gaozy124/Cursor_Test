@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using LocalizationQAGuard.Editor.Core.Models;
 using LocalizationQAGuard.Editor.Core.Services;
+using LocalizationQAGuard.Editor.Unity;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace LocalizationQAGuard.Editor.UI;
 public sealed class LocalizationQAGuardWindow : EditorWindow
 {
     private readonly LocalizationScanService _scanService = new();
+    private readonly LocalizationSafeFixService _safeFixService = new();
     private ScanContext _context = new();
     private ScanReport _lastReport = new();
     private LocalizationProjectSnapshot _lastSnapshot = new();
@@ -19,6 +21,7 @@ public sealed class LocalizationQAGuardWindow : EditorWindow
     private string _searchText = string.Empty;
     private int _severityFilterIndex;
     private bool _isScanning;
+    private bool _fixDryRun = true;
 
     private static readonly string[] SeverityFilters = { "All", "Error", "Warning", "Info" };
 
@@ -88,6 +91,19 @@ public sealed class LocalizationQAGuardWindow : EditorWindow
             }
             EditorGUI.EndDisabledGroup();
         }
+
+        using (new EditorGUILayout.HorizontalScope())
+        {
+            _fixDryRun = EditorGUILayout.ToggleLeft("Dry run safe fix", _fixDryRun, GUILayout.Width(140));
+            GUILayout.FlexibleSpace();
+
+            EditorGUI.BeginDisabledGroup(_lastSnapshot.Collections.Count == 0 || _isScanning);
+            if (GUILayout.Button("Apply Safe Fixes (Empty → Reference)", GUILayout.Height(24), GUILayout.Width(280)))
+            {
+                ApplySafeFixes();
+            }
+            EditorGUI.EndDisabledGroup();
+        }
     }
 
     private void DrawSummary()
@@ -101,6 +117,12 @@ public sealed class LocalizationQAGuardWindow : EditorWindow
             EditorGUILayout.LabelField($"Warnings: {_lastReport.WarningCount}", GUILayout.Width(110));
             EditorGUILayout.LabelField($"Info: {_lastReport.InfoCount}", GUILayout.Width(80));
             GUILayout.FlexibleSpace();
+        }
+
+        if (_lastReport.Issues.Count > 0)
+        {
+            var generatedAt = _lastReport.Metadata.GeneratedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
+            EditorGUILayout.LabelField($"Last Scan: {generatedAt} | Project: {_lastReport.Metadata.ProjectName}", EditorStyles.miniLabel);
         }
     }
 
@@ -252,6 +274,32 @@ public sealed class LocalizationQAGuardWindow : EditorWindow
         if (File.Exists(path))
         {
             EditorUtility.RevealInFinder(path);
+        }
+    }
+
+    private void ApplySafeFixes()
+    {
+        try
+        {
+            var fixResult = _safeFixService.ApplyEmptyTranslationFixes(_lastSnapshot, _context, _fixDryRun);
+            var title = _fixDryRun ? "Safe Fix Dry Run Complete" : "Safe Fix Complete";
+            var body =
+                $"Candidates: {fixResult.CandidateCount}\n" +
+                $"Applied: {fixResult.AppliedCount}\n" +
+                $"Skipped: {fixResult.SkippedCount}";
+
+            EditorUtility.DisplayDialog("Localization QA Guard", body, "OK");
+            Debug.Log($"[Localization QA Guard] {title}. {body}");
+
+            if (!_fixDryRun && fixResult.AppliedCount > 0)
+            {
+                RunScan();
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"[Localization QA Guard] Safe fix failed: {ex}");
+            EditorUtility.DisplayDialog("Localization QA Guard", $"Safe fix failed:\n{ex.Message}", "OK");
         }
     }
 }

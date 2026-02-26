@@ -31,6 +31,14 @@ public sealed class UtilityAndExporterTests
     {
         var report = new ScanReport
         {
+            Metadata = new ScanMetadata
+            {
+                GeneratedAtUtc = DateTimeOffset.Parse("2026-02-26T00:00:00+00:00"),
+                ProjectName = "SampleProject",
+                ProjectPath = "/tmp/SampleProject",
+                CollectionCount = 2,
+                EntryCount = 14
+            },
             Issues =
             [
                 new ScanIssue
@@ -60,7 +68,9 @@ public sealed class UtilityAndExporterTests
 
         Assert.Contains("LQG001", csv);
         Assert.Contains("shop.buy", csv);
+        Assert.Contains("# ProjectName,SampleProject", csv);
         Assert.Contains("\"RuleId\": \"LQG001\"", json);
+        Assert.Contains("\"ProjectName\": \"SampleProject\"", json);
     }
 }
 

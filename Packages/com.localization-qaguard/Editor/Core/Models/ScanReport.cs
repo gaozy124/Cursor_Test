@@ -5,6 +5,7 @@ namespace LocalizationQAGuard.Editor.Core.Models;
 
 public sealed class ScanReport
 {
+    public ScanMetadata Metadata { get; init; } = new();
     public IReadOnlyList<ScanIssue> Issues { get; init; } = new List<ScanIssue>();
 
     public int ErrorCount => Issues.Count(x => x.Severity == ScanSeverity.Error);
