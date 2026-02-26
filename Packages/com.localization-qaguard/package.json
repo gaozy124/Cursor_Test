@@ -4,10 +4,19 @@
   "displayName": "Localization QA Guard",
   "description": "Unity editor tool for localization quality checks: missing keys, empty values, placeholder mismatches, smart string issues, and unused keys.",
   "unity": "2021.3",
+  "documentationUrl": "https://github.com/gaozy124/Cursor_Test/tree/cursor/unity-c98e/Packages/com.localization-qaguard",
+  "changelogUrl": "https://github.com/gaozy124/Cursor_Test/blob/cursor/unity-c98e/Packages/com.localization-qaguard/CHANGELOG.md",
   "author": {
     "name": "Localization QA Guard",
     "url": "https://example.com/localization-qaguard"
   },
+  "samples": [
+    {
+      "displayName": "Sample Reports",
+      "description": "Example JSON/CSV outputs for CI and QA integration.",
+      "path": "Samples~/SampleReports"
+    }
+  ],
   "keywords": [
     "localization",
     "qa",
