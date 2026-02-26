@@ -102,6 +102,12 @@ public sealed class LocalizationQAGuardWindow : EditorWindow
             EditorGUILayout.LabelField($"Info: {_lastReport.InfoCount}", GUILayout.Width(80));
             GUILayout.FlexibleSpace();
         }
+
+        if (_lastReport.Issues.Count > 0)
+        {
+            var generatedAt = _lastReport.Metadata.GeneratedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
+            EditorGUILayout.LabelField($"Last Scan: {generatedAt} | Project: {_lastReport.Metadata.ProjectName}", EditorStyles.miniLabel);
+        }
     }
 
     private void DrawIssueList()

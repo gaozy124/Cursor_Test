@@ -23,6 +23,16 @@ public static class CsvReportExporter
     {
         var lines = new List<string>
         {
+            $"# GeneratedAtUtc,{Escape(report.Metadata.GeneratedAtUtc.ToString("O"))}",
+            $"# ProjectName,{Escape(report.Metadata.ProjectName)}",
+            $"# ProjectPath,{Escape(report.Metadata.ProjectPath)}",
+            $"# CollectionCount,{report.Metadata.CollectionCount}",
+            $"# EntryCount,{report.Metadata.EntryCount}",
+            $"# IssueCount,{report.Issues.Count}",
+            $"# ErrorCount,{report.ErrorCount}",
+            $"# WarningCount,{report.WarningCount}",
+            $"# InfoCount,{report.InfoCount}",
+            string.Empty,
             string.Join(",", Headers)
         };
 
