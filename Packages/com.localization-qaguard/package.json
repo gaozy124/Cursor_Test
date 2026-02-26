@@ -1,0 +1,18 @@
+{
+  "name": "com.localization-qaguard",
+  "version": "0.1.0",
+  "displayName": "Localization QA Guard",
+  "description": "Unity editor tool for localization quality checks: missing keys, empty values, placeholder mismatches, smart string issues, and unused keys.",
+  "unity": "2021.3",
+  "author": {
+    "name": "Localization QA Guard",
+    "url": "https://example.com/localization-qaguard"
+  },
+  "keywords": [
+    "localization",
+    "qa",
+    "validator",
+    "unity",
+    "editor"
+  ]
+}
