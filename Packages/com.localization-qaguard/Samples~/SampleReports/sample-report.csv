@@ -1,0 +1,14 @@
+# GeneratedAtUtc,2026-02-26T00:00:00.0000000+00:00
+# ProjectName,MyUnityProject
+# ProjectPath,/path/to/MyUnityProject
+# CollectionCount,2
+# EntryCount,14
+# IssueCount,2
+# ErrorCount,2
+# WarningCount,0
+# InfoCount,0
+
+RuleId,Severity,Collection,Key,Locale,Message,SuggestedFix,AssetPath
+LQG002,Error,UI,menu.play,fr,Missing translation for locale 'fr'.,Add a translation in this locale, or intentionally suppress with project policy.,Assets/Localization/UI Shared.asset
+LQG004,Error,Shop,shop.price,ja,"Placeholder mismatch. Expected [amount], found [price].",Align placeholders with the reference locale text.,Assets/Localization/Shop Shared.asset
+
