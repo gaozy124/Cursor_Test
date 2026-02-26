@@ -25,7 +25,12 @@ Unity Editor package for localization QA validation (**Localization QA Guard**).
 - There is no linter configured (no `.editorconfig`, `dotnet format` config, or Roslyn analyzers beyond defaults). `dotnet build` with zero warnings is the closest lint equivalent.
 - The Editor UI (`LocalizationQAGuardWindow.cs`), CLI (`LocalizationQAGuardCli.cs`), and Unity scanners depend on `UnityEditor`/`UnityEngine` assemblies and cannot compile or run outside Unity.
 
+### CI script
+
+`scripts/run-localization-qa.sh` is a bash wrapper for running the QA scan in Unity batch mode. It requires a Unity installation and a Unity project, so it cannot be tested in this headless environment. Its syntax can be validated with `bash -n scripts/run-localization-qa.sh`.
+
 ### Gotchas
 
 - The .NET SDK is installed per-user at `$HOME/.dotnet`. If `dotnet` is not found, run: `export DOTNET_ROOT=$HOME/.dotnet && export PATH=$DOTNET_ROOT:$PATH`
 - NuGet restore requires network access on first run; subsequent builds use cached packages.
+- Expected test count is 16 (rule engine tests + utility/exporter tests + exit code policy tests).
